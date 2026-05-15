@@ -1,0 +1,6 @@
+venv/
+__pycache__/
+*.pyc
+*.pkl
+customer_churn.db
+data/
