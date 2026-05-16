@@ -61,11 +61,17 @@ st.warning(
     f"Estimated Monthly Revenue at Risk: ${estimated_loss:,.2f}"
 )
 
-# Connect to SQL database
+# Connect to SQLite database
 conn = sqlite3.connect("customer_churn.db")
 
-# Read SQL table
-sql_data = pd.read_sql("SELECT * FROM customers LIMIT 5", conn)
+# Store dataset into SQL table
+df.to_sql("customers", conn, if_exists="replace", index=False)
+
+# Read SQL data
+sql_data = pd.read_sql(
+    "SELECT * FROM customers LIMIT 5",
+    conn
+)
 
 st.subheader("SQL Database Preview")
 st.write(sql_data)
