@@ -88,11 +88,38 @@ monthly_charges = st.number_input(
     value=50.0
 )
 
+contract_type = st.selectbox(
+    "Contract Type",
+    ["Month-to-Month", "One Year", "Two Year"]
+)
+
+internet_service = st.selectbox(
+    "Internet Service",
+    ["DSL", "Fiber Optic", "No"]
+)
+
+payment_method = st.selectbox(
+    "Payment Method",
+    [
+        "Electronic Check",
+        "Mailed Check",
+        "Bank Transfer",
+        "Credit Card"
+    ]
+)
+
 # Create input dataframe
 input_data = pd.DataFrame({
     "Tenure Months": [tenure],
-    "Monthly Charges": [monthly_charges]
+    "Monthly Charges": [monthly_charges],
+    "Contract": [contract_type],
+    "Internet Service": [internet_service],
+    "Payment Method": [payment_method]
 })
+
+# Convert categorical inputs
+for col in input_data.select_dtypes(include=["object", "string"]).columns:
+    input_data[col] = input_data[col].astype("category").cat.codes
 
 # Add missing columns
 for col in model_columns:
